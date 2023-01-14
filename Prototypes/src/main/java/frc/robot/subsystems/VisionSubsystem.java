@@ -13,27 +13,28 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;  
 import edu.wpi.first.networktables.GenericEntry;
 
 public class VisionSubsystem extends SubsystemBase {
 
   private GenericEntry hasTargets;
   private GenericEntry targetID;
-  private GenericEntry targetPose;
+  private GenericEntry targetX;
+  private GenericEntry targetY;
+  private GenericEntry targetZ;
   private GenericEntry targetAmbiguity;
 
   private PhotonCamera camera;
   private PhotonPipelineResult data;
   List<PhotonTrackedTarget> targets;
-  // TODO: figure out how to get this to work
 
   /** Creates a new VisionSubsystem. */
   public VisionSubsystem(PhotonCamera camera) {
     this.camera = camera;
     data = camera.getLatestResult();
-    initTelemetry(targets.get(0));
+    targets = data.getTargets();
+    initTelemetry();
   }
 
   public void printTarget(PhotonTrackedTarget target) {
@@ -46,33 +47,43 @@ public class VisionSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    PhotonTrackedTarget chosenTarget = targets.get(0);
     data = camera.getLatestResult();
     targets = data.getTargets();
-    if (data.hasTargets()) printTarget(chosenTarget);
+    PhotonTrackedTarget chosenTarget = data.getBestTarget();
+    printTarget(chosenTarget);
     updateTelemetry(chosenTarget);
   }
 
-  private void initTelemetry (PhotonTrackedTarget target) {
+  private void initTelemetry () {
     ShuffleboardTab tab = Shuffleboard.getTab("Vision");
 
-    hasTargets = tab.add("Target Acquired", data.hasTargets())
+    hasTargets = tab.add("Target Acquired", false)
       .withPosition(0, 0)
       .withSize(1, 1)
       .getEntry();
 
-    targetID = tab.add("Target ID", target.getFiducialId())
+    targetID = tab.add("Target ID", 0)
       .withPosition(1, 0)
       .withSize(1, 1)
       .getEntry();
     
-    targetPose = tab.add("Target Position", target.getBestCameraToTarget())
+    targetX = tab.add("Target X", 0.0)
       .withPosition(2, 0)
       .withSize(1, 1)
       .getEntry();
 
-    targetAmbiguity = tab.add("Target Ambiguity", target.getPoseAmbiguity())
+    targetY = tab.add("Target Y", 0.0)
       .withPosition(3, 0)
+      .withSize(1, 1)
+      .getEntry();
+
+    targetZ = tab.add("Target Z", 0.0)
+      .withPosition(4, 0)
+      .withSize(1, 1)
+      .getEntry();
+
+    targetAmbiguity = tab.add("Target Ambiguity", 0.0)
+      .withPosition(5, 0)
       .withSize(1, 1)
       .getEntry();
   }
@@ -80,7 +91,14 @@ public class VisionSubsystem extends SubsystemBase {
   private void updateTelemetry (PhotonTrackedTarget target) {
     hasTargets.setBoolean(data.hasTargets());
     targetID.setValue(target.getFiducialId());
-    targetPose.setValue(target.getBestCameraToTarget());
+    targetX.setValue(target.getBestCameraToTarget().getX());
+    targetY.setValue(target.getBestCameraToTarget().getY());
+    targetZ.setValue(target.getBestCameraToTarget().getZ());
     targetAmbiguity.setValue(target.getPoseAmbiguity());
+  }
+
+  // this is useless, delete it.
+  public boolean exampleCondition () {
+    return false;
   }
 }
