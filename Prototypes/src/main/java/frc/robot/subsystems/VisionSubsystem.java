@@ -4,10 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.photonvision.PhotonCamera;
@@ -18,7 +18,6 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.Pair;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -36,15 +35,14 @@ public class VisionSubsystem extends SubsystemBase {
   private GenericEntry targetZ;
   private GenericEntry robotX;
   private GenericEntry robotY;
-  private GenericEntry robotZ;
+  private GenericEntry robotTheta;
   private GenericEntry targetAmbiguity;
 
   private PhotonCamera camera;
   private PhotonPipelineResult data;
-  private List<PhotonTrackedTarget> targets;
 
   private AprilTagFieldLayout  layout;
-  private final Path sillyPath = Paths.get(Filesystem.getDeployDirectory());
+  private final Path sillyPath = Paths.get(Filesystem.getDeployDirectory().toString(), "2023-chargedup.json");
   private RobotPoseEstimator poseEstimator;
   private final Transform3d cameraPose = new Transform3d();
   private ArrayList<Pair<PhotonCamera, Transform3d>> cameraList = new ArrayList<Pair<PhotonCamera, Transform3d>>();
@@ -55,8 +53,12 @@ public class VisionSubsystem extends SubsystemBase {
   public VisionSubsystem(PhotonCamera camera) {
     this.camera = camera;
     data = camera.getLatestResult();
-    targets = data.getTargets();
-    layout = new AprilTagFieldLayout(sillyPath);
+    try {
+      layout = new AprilTagFieldLayout(sillyPath);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     cameraList.add(new Pair<PhotonCamera, Transform3d>(camera, cameraPose));
     poseEstimator = new RobotPoseEstimator(layout, PoseStrategy.LOWEST_AMBIGUITY, cameraList);
 
@@ -74,7 +76,6 @@ public class VisionSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     data = camera.getLatestResult();
-    targets = data.getTargets();
     PhotonTrackedTarget chosenTarget = data.getBestTarget();
     // printTarget(chosenTarget);
     robotPoseOptional = poseEstimator.update();
@@ -126,7 +127,7 @@ public class VisionSubsystem extends SubsystemBase {
       .withSize(1, 1)
       .getEntry();
 
-    robotZ = tab.add("Robot zPos", 0.0)
+    robotTheta = tab.add("Robot Angle", 0.0)
       .withPosition(2, 1)
       .withSize(1, 1)
       .getEntry();
@@ -141,7 +142,7 @@ public class VisionSubsystem extends SubsystemBase {
     targetAmbiguity.setValue(target.getPoseAmbiguity());
     robotX.setValue(robotPose.getX());
     robotY.setValue(robotPose.getY());
-    robotZ.setValue(robotPose.getZ());
+    robotTheta.setValue(robotPose.getRotation().toRotation2d().getDegrees());
   }
 
   // this is useless, delete it.
