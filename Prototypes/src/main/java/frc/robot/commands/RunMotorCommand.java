@@ -34,7 +34,10 @@ public class RunMotorCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    motorSubsystem.setPower(powerSupplier.getAsDouble());
+    double power = powerSupplier.getAsDouble();
+    System.out.println("Power: " + Double.toString((power)));
+
+    motorSubsystem.setPower(power);
   }
 
   // Called once the command ends or is interrupted.
