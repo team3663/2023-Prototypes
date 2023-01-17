@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class RunMotorCommand extends CommandBase {
 
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final MotorSubsystem motorSubsystem;
   private final DoubleSupplier powerSupplier;
 
@@ -21,6 +20,8 @@ public class RunMotorCommand extends CommandBase {
    * @param motorSubsystem The subsystem used by this command.
    */
   public RunMotorCommand(MotorSubsystem motorSubsystem, DoubleSupplier powerSupplier) {
+    System.out.println("===== Creating RunMotor Command ");
+
     this.motorSubsystem = motorSubsystem;
     this.powerSupplier = powerSupplier;
     
@@ -29,13 +30,15 @@ public class RunMotorCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("===== Initializing RunMotor Command ");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double power = powerSupplier.getAsDouble();
-    System.out.println("Power: " + Double.toString((power)));
+    System.out.println("===== Execute Motor Connamd: power=" + Double.toString((power)));
 
     motorSubsystem.setPower(power);
   }
@@ -43,6 +46,7 @@ public class RunMotorCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("===== Ending RunMotor Command ");
     motorSubsystem.setPower(0);
   }
 

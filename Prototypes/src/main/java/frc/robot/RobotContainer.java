@@ -1,11 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.CanIds;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.RunMotorCommand;
 import frc.robot.subsystems.MotorSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -43,7 +44,10 @@ public class RobotContainer {
    * Use this method to define your trigger->command mappings.
    */
   private void configureBindings() {
-  }
+
+    driverController.a().onTrue(new InstantCommand(() -> System.out.println("Click")));
+
+ }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
