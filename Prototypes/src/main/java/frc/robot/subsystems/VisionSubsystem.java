@@ -56,7 +56,6 @@ public class VisionSubsystem extends SubsystemBase {
     try {
       layout = new AprilTagFieldLayout(sillyPath);
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     cameraList.add(new Pair<PhotonCamera, Transform3d>(camera, cameraPose));
@@ -76,12 +75,13 @@ public class VisionSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     data = camera.getLatestResult();
-    PhotonTrackedTarget chosenTarget = data.getBestTarget();
-    // printTarget(chosenTarget);
-    robotPoseOptional = poseEstimator.update();
-    robotPose = robotPoseOptional.get().getFirst();
-    
-    updateTelemetry(chosenTarget);
+    if (data.hasTargets()) {
+      PhotonTrackedTarget chosenTarget = data.getBestTarget();
+      updateTelemetry(chosenTarget);
+      robotPoseOptional = poseEstimator.update();
+      robotPose = robotPoseOptional.get().getFirst();
+      System.out.println("Target Acquired");
+    }
   }
 
   private void initTelemetry () {
