@@ -109,6 +109,7 @@ repositories {
     }
 }
 
-configurations.all {
-    exclude group: "edu.wpi.first.wpilibj"
-}
+// AdvantageKit docs say to include this but it breaks the build.
+//configurations.all {
+//    exclude group: "edu.wpi.first.wpilibj"
+//}
