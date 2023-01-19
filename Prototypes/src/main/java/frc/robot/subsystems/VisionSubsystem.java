@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.photonvision.PhotonCamera;
 import org.photonvision.RobotPoseEstimator;
 import org.photonvision.RobotPoseEstimator.PoseStrategy;
@@ -67,7 +69,7 @@ public class VisionSubsystem extends SubsystemBase {
     try {
       layout = new AprilTagFieldLayout(fieldJsonPath);
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
 
     robotPose = new Pose3d(0, 0, 0, new Rotation3d(0, 0, 0));
