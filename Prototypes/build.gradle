@@ -109,7 +109,8 @@ repositories {
     }
 }
 
-// AdvantageKit docs say to include this but it breaks the build.
-//configurations.all {
-//    exclude group: "edu.wpi.first.wpilibj"
-//}
+// Allow AdvantageKit shims to replace default WPILib implementations, once you add this you have
+// to derive your robot class from LoggedRobot instead of TimedRobot or you will get an unresovled type error.
+configurations.all {
+    exclude group: "edu.wpi.first.wpilibj"
+}
