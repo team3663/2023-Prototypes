@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.CanIds;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.RunMotorCommand;
-import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.TalonSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -16,7 +16,7 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.DRIVE_CONTROLLER_PORT);
 
-  private MotorSubsystem motorSubsystem;
+  private TalonSubsystem motorSubsystem;
   private RunMotorCommand runMotorCommand;
 
   /**
@@ -30,7 +30,7 @@ public class RobotContainer {
 
   public void createSubsystems() {
 
-    motorSubsystem = new MotorSubsystem(CanIds.MOTOR1_ID);
+    motorSubsystem = new TalonSubsystem(CanIds.MOTOR1_ID);
 
   }
 

@@ -9,14 +9,14 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class MotorSubsystem extends SubsystemBase {
+public class TalonSubsystem extends SubsystemBase {
 
-//	private final TalonFX motor;
+	private final TalonFX motor;
 
-	public MotorSubsystem(int motorId) {
+	public TalonSubsystem(int motorId) {
 		System.out.println("===== MotorSubsystem Constructor");
 
-//		motor = new TalonFX(motorId);
+		motor = new TalonFX(motorId);
 	}
 
 	@Override
@@ -31,6 +31,6 @@ public class MotorSubsystem extends SubsystemBase {
 
 	public void setPower(double power) {
 		System.out.println("=====  MotorSubsystem.setPower");
-//		motor.set(ControlMode.PercentOutput, power);
+		motor.set(ControlMode.PercentOutput, power);
 	}
 }
