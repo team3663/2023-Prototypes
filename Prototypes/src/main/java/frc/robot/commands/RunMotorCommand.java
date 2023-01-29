@@ -4,14 +4,14 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.TalonSubsystem;
+import frc.robot.subsystems.SparkMaxSubsystem;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class RunMotorCommand extends CommandBase {
 
-  private final TalonSubsystem motorSubsystem;
+  private final SparkMaxSubsystem motorSubsystem;
   private final DoubleSupplier powerSupplier;
 
   /**
@@ -19,7 +19,7 @@ public class RunMotorCommand extends CommandBase {
    *
    * @param motorSubsystem The subsystem used by this command.
    */
-  public RunMotorCommand(TalonSubsystem motorSubsystem, DoubleSupplier powerSupplier) {
+  public RunMotorCommand(SparkMaxSubsystem motorSubsystem, DoubleSupplier powerSupplier) {
     System.out.println("===== Creating RunMotor Command ");
 
     this.motorSubsystem = motorSubsystem;
