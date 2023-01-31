@@ -5,9 +5,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.CanIds;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.RunMotorCommand;
-import frc.robot.subsystems.SparkMaxSubsystem;
-import frc.robot.subsystems.TalonSubsystem;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -17,9 +16,9 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.DRIVE_CONTROLLER_PORT);
 
-  private TalonSubsystem talonSubsystem;
-  private SparkMaxSubsystem sparkSubsystem;
-  private RunMotorCommand runMotorCommand;
+
+  private IntakeSubsystem intake;
+  private IntakeCommand intakeCommand;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -32,15 +31,19 @@ public class RobotContainer {
 
   public void createSubsystems() {
 
-    talonSubsystem = new TalonSubsystem(CanIds.TALON);
-    sparkSubsystem = new SparkMaxSubsystem(CanIds.SPARK);
-
+    intake = new IntakeSubsystem(CanIds.WRIST_MOTOR, CanIds.INTAKE_MOTOR);
   }
 
   public void createCommands() {
 
-    runMotorCommand = new RunMotorCommand(sparkSubsystem, () -> -driverController.getLeftY());
-    sparkSubsystem.setDefaultCommand(runMotorCommand);
+    intakeCommand = new IntakeCommand(
+      intake,
+      () -> -driverController.getLeftY(),
+      () -> -driverController.getRightY()
+    );
+
+
+    intake.setDefaultCommand(intakeCommand);
   }
 
   /**
