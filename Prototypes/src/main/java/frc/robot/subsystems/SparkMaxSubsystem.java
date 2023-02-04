@@ -16,11 +16,12 @@ public class SparkMaxSubsystem extends SubsystemBase {
 	public SparkMaxSubsystem(int motorId) {
 
 		motor = new CANSparkMax(motorId, MotorType.kBrushed);
+		motor.restoreFactoryDefaults();
 	}
 
 	@Override
 	public void periodic() {
-		// This method will be called once per scheduler run
+		System.out.println(motor.getOutputCurrent());
 	}
 
 	public void setPower(double power) {

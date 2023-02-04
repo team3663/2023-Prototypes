@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.CanIds;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.RunMotorCommand;
+import frc.robot.commands.RunSparkCommand;
+import frc.robot.commands.RunTalonCommand;
+import frc.robot.commands.utility.ControllerHelper;
 import frc.robot.subsystems.SparkMaxSubsystem;
 import frc.robot.subsystems.TalonSubsystem;
 
@@ -19,7 +21,8 @@ public class RobotContainer {
 
   private TalonSubsystem talonSubsystem;
   private SparkMaxSubsystem sparkSubsystem;
-  private RunMotorCommand runMotorCommand;
+  private RunSparkCommand runSparkCommand;
+  private RunTalonCommand runTalonCommand;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -39,8 +42,11 @@ public class RobotContainer {
 
   public void createCommands() {
 
-    runMotorCommand = new RunMotorCommand(sparkSubsystem, () -> driverController.getLeftY());
-    sparkSubsystem.setDefaultCommand(runMotorCommand);
+    runSparkCommand = new RunSparkCommand(sparkSubsystem, () -> ControllerHelper.modifyAxis(driverController.getLeftY()));
+    sparkSubsystem.setDefaultCommand(runSparkCommand);
+
+    runTalonCommand = new RunTalonCommand(talonSubsystem, () -> ControllerHelper.modifyAxis(driverController.getRightY()));
+    talonSubsystem.setDefaultCommand(runTalonCommand);
   }
 
   /**
