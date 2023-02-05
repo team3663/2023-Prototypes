@@ -42,8 +42,8 @@ public class RobotContainer {
 
   public void createCommands() {
 
-    runMotorCommand = new RunMotorCommand(sparkSubsystem, () -> driverController.getLeftY());
-    sparkSubsystem.setDefaultCommand(runMotorCommand);
+    runTalonCommand = new RunTalonCommand(talonSubsystem, () -> driverController.getRightY());
+    sparkSubsystem.setDefaultCommand(runTalonCommand);
   }
 
   /**
