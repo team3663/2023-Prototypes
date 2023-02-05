@@ -7,6 +7,7 @@ import frc.robot.Constants.CanIds;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.utility.ControllerHelper;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -38,8 +39,8 @@ public class RobotContainer {
 
     intakeCommand = new IntakeCommand(
       intake,
-      () -> -driverController.getLeftY(),
-      () -> -driverController.getRightY()
+      () -> ControllerHelper.modifyAxis(-driverController.getLeftY()),
+      () -> ControllerHelper.modifyAxis(-driverController.getRightY())
     );
 
 
