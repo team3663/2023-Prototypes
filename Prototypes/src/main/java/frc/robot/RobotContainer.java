@@ -44,7 +44,11 @@ public class RobotContainer {
 
     runTalonCommand = new RunTalonCommand(talonSubsystem, () -> driverController.getRightY());
     sparkSubsystem.setDefaultCommand(runTalonCommand);
+
+    runSparkCommand = new RunSparkCommand(sparkSubsystem, () -> driverController.getLeftY());
+    sparkSubsystem.setDefaultCommand(runSparkCommand);
   }
+
 
   /**
    * Use this method to define your trigger->command mappings.
