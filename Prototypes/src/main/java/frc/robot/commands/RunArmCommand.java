@@ -13,6 +13,8 @@ public class RunArmCommand extends CommandBase {
 
   public RunArmCommand(ArmSubsystem arm) {
     this.arm = arm;
+
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.

@@ -5,8 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerPorts;
+import frc.robot.commands.RunArmCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
@@ -15,7 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
 
-  private final CommandXboxController driverController = new CommandXboxController(ControllerPorts.DRIVER);
+  private final CommandXboxController driveController = new CommandXboxController(ControllerPorts.DRIVER);
+
+  private ArmSubsystem arm;
+  private RunArmCommand armCommand;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -28,10 +32,13 @@ public class RobotContainer {
 
   public void createSubsystems() {
 
+    arm = new ArmSubsystem(0, 0);
   }
 
   public void createCommands() {
 
+    armCommand = new RunArmCommand(arm);
+    arm.setDefaultCommand(armCommand);
   }
 
   /**
@@ -39,7 +46,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    driverController.a().onTrue(new InstantCommand(() -> System.out.println("Hello World!")));
   }
 
   /**
