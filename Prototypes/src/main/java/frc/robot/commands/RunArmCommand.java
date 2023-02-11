@@ -7,20 +7,12 @@ package frc.robot.commands;
 import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField", "unused"})
-  private final ArmSubsystem m_subsystem;
+public class RunArmCommand extends CommandBase {
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-  public ExampleCommand(ArmSubsystem subsystem) {
-    m_subsystem = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+  private final ArmSubsystem arm;
+
+  public RunArmCommand(ArmSubsystem arm) {
+    this.arm = arm;
   }
 
   // Called when the command is initially scheduled.

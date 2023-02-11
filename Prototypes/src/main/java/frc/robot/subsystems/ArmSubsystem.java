@@ -9,12 +9,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class ArmSubsystem extends SubsystemBase {
 
 	private final CANSparkMax wristMotor;
 	private final CANSparkMax intakeMotor;
 
-	public IntakeSubsystem(int wristMotorId, int intakeMotorId) {
+	public ArmSubsystem(int wristMotorId, int intakeMotorId) {
 
 		// Neo wrist motor
 		wristMotor = new CANSparkMax(wristMotorId, MotorType.kBrushless);
