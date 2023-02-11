@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.CanIds;
 import frc.robot.Constants.ControllerPorts;
 import frc.robot.commands.RunArmCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
 
-  private final CommandXboxController driveController = new CommandXboxController(ControllerPorts.DRIVER);
+  private final CommandXboxController driverController = new CommandXboxController(ControllerPorts.DRIVER);
 
   private ArmSubsystem arm;
   private RunArmCommand armCommand;
@@ -32,7 +33,9 @@ public class RobotContainer {
 
   public void createSubsystems() {
 
-    arm = new ArmSubsystem(0, 0);
+    arm = new ArmSubsystem(CanIds.SHOULDER_MOTOR, CanIds.ELBOW_RIGHT_MOTOR,CanIds.ELBOW_LEFT_MOTOR,
+     CanIds.WRIST_MOTOR,CanIds.INTAKE_MOTOR);
+    // put in actual ID's when available//
   }
 
   public void createCommands() {

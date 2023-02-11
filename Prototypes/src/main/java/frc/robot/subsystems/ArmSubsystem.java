@@ -4,21 +4,37 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
-
-	private final CANSparkMax wristMotor;
+	private final CANSparkMax shoulderMotor;
+	private final CANSparkMax elbowMotorRight;
+	private final CANSparkMax elbowMotorLeft;
+	private final TalonFX wristMotor;
 	private final CANSparkMax intakeMotor;
 
-	public ArmSubsystem(int wristMotorId, int intakeMotorId) {
+	public ArmSubsystem(int shoulderMotorId, int elbowRightMotorId, int elbowLeftMotorId,
+	int wristMotorId, int intakeMotorId) {
+		// Neo shoulder motor
+		shoulderMotor = new CANSparkMax(shoulderMotorId, MotorType.kBrushless);
+		shoulderMotor.restoreFactoryDefaults();
+		// Neo elbow motor
+		elbowMotorRight = new CANSparkMax(elbowRightMotorId, MotorType.kBrushless);
+		elbowMotorRight.restoreFactoryDefaults();
 
-		// Neo wrist motor
-		wristMotor = new CANSparkMax(wristMotorId, MotorType.kBrushless);
-		wristMotor.restoreFactoryDefaults();
+		// Neo elbow motors
+		elbowMotorLeft = new CANSparkMax(elbowLeftMotorId, MotorType.kBrushless);
+		elbowMotorLeft.restoreFactoryDefaults();
+		elbowMotorLeft.setInverted(true);
+		elbowMotorLeft.follow(elbowMotorRight);
+		// talon wrist motor
+		wristMotor = new TalonFX(wristMotorId);
+		// wristMotor.restoreFactoryDefaults();
 
 		// Brushed PLG intake motor
 		intakeMotor = new CANSparkMax(intakeMotorId, MotorType.kBrushed);
@@ -29,12 +45,21 @@ public class ArmSubsystem extends SubsystemBase {
 	public void periodic() {
 		// This method will be called once per scheduler run
 	}
-	
+	public void setShoulderPower(double power) {
+		shoulderMotor.set(power);
+	}
+
+	public void setElbowPower(double power) {
+		elbowMotorRight.set(power);
+		//elbowMotorLeft follows whatever the right does//
+	}
+
 	public void setWristPower(double power) {
-		wristMotor.set(power);
+		wristMotor.set(ControlMode.PercentOutput,power);
 	}
 
 	public void setIntakePower(double power) {
 		intakeMotor.set(power);
 	}
 }
+	
