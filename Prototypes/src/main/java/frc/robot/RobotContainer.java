@@ -5,9 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.ControllerPorts;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
@@ -40,6 +39,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
+    driverController.a().onTrue(new InstantCommand(() -> System.out.println("Hello World!")));
   }
 
   /**
