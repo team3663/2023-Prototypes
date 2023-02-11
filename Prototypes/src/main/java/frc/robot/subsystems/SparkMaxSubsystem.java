@@ -15,7 +15,7 @@ public class SparkMaxSubsystem extends SubsystemBase {
 
 	public SparkMaxSubsystem(int motorId) {
 
-		motor = new CANSparkMax(motorId, MotorType.kBrushed);
+		motor = new CANSparkMax(motorId, MotorType.kBrushless);
 		motor.restoreFactoryDefaults();
 	}
 

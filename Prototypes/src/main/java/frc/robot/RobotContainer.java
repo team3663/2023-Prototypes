@@ -43,7 +43,7 @@ public class RobotContainer {
   public void createCommands() {
 
     runTalonCommand = new RunTalonCommand(talonSubsystem, () -> ControllerHelper.modifyAxis(driverController.getRightY()));
-    sparkSubsystem.setDefaultCommand(runTalonCommand);
+    talonSubsystem.setDefaultCommand(runTalonCommand);
 
     runSparkCommand = new RunSparkCommand(sparkSubsystem, () -> ControllerHelper.modifyAxis(driverController.getLeftY()));
     sparkSubsystem.setDefaultCommand(runSparkCommand);
