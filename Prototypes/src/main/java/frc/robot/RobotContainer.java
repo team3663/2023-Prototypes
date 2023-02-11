@@ -33,8 +33,8 @@ public class RobotContainer {
 
   public void createSubsystems() {
 
-    arm = new ArmSubsystem(CanIds.SHOULDER_MOTOR, CanIds.ELBOW_RIGHT_MOTOR,CanIds.ELBOW_LEFT_MOTOR,
-     CanIds.WRIST_MOTOR,CanIds.INTAKE_MOTOR);
+    arm = new ArmSubsystem(CanIds.SHOULDER_MOTOR, CanIds.ELBOW_RIGHT_MOTOR,
+        CanIds.ELBOW_LEFT_MOTOR,CanIds.WRIST_MOTOR,CanIds.INTAKE_MOTOR);
     // put in actual ID's when available//
   }
 
