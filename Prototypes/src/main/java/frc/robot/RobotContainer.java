@@ -9,55 +9,57 @@ import frc.robot.Constants.ControllerPorts;
 import frc.robot.commands.RunArmCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
 
 /**
  * This class is where the bulk of the robot should be declared.
  */
 public class RobotContainer {
 
-  private final CommandXboxController driverController = new CommandXboxController(ControllerPorts.DRIVER);
+    private final CommandXboxController driverController = new CommandXboxController(ControllerPorts.DRIVER);
 
-  private ArmSubsystem arm;
-  private RunArmCommand armCommand;
+    private ArmSubsystem arm;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    createSubsystems();
-    createCommands();
-    configureBindings();
-  }
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        createSubsystems();
+        createCommands();
+        configureBindings();
+    }
 
-  public void createSubsystems() {
+    public void createSubsystems() {
 
-    arm = new ArmSubsystem(CanIds.SHOULDER_MOTOR, CanIds.ELBOW_RIGHT_MOTOR,
-        CanIds.ELBOW_LEFT_MOTOR,CanIds.WRIST_MOTOR,CanIds.INTAKE_MOTOR);
-    // put in actual ID's when available//
-  }
+        arm = new ArmSubsystem(CanIds.SHOULDER_MOTOR, CanIds.ELBOW_RIGHT_MOTOR,
+                CanIds.ELBOW_LEFT_MOTOR, CanIds.WRIST_MOTOR, CanIds.INTAKE_MOTOR);
+    }
 
-  public void createCommands() {
+    public void createCommands() {
+        arm.setDefaultCommand(getArmCommand());
+    }
 
-    armCommand = new RunArmCommand(arm);
-    arm.setDefaultCommand(armCommand);
-  }
+    public Command getArmCommand(){
+        return new RunArmCommand(arm,
+            () -> driverController.getLeftY(),
+            () -> driverController.getLeftX(),
+            () -> driverController.getRightY(),
+            () -> driverController.getRightX());
+    }
 
-  /**
-   * Use this method to define your trigger->command mappings.
-   */
-  private void configureBindings() {
+    /**
+     * Use this method to define your trigger->command mappings.
+     */
+    private void configureBindings() {}
 
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return null;
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        return null;
+    }
 }

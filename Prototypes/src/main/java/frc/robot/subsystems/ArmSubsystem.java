@@ -19,7 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
 	private final CANSparkMax intakeMotor;
 
 	public ArmSubsystem(int shoulderMotorId, int elbowRightMotorId, int elbowLeftMotorId,
-	int wristMotorId, int intakeMotorId) {
+		int wristMotorId, int intakeMotorId) {
 		// Neo shoulder motor
 		shoulderMotor = new CANSparkMax(shoulderMotorId, MotorType.kBrushless);
 		shoulderMotor.restoreFactoryDefaults();
@@ -45,21 +45,12 @@ public class ArmSubsystem extends SubsystemBase {
 	public void periodic() {
 		// This method will be called once per scheduler run
 	}
-	public void setShoulderPower(double power) {
-		shoulderMotor.set(power);
-	}
 
-	public void setElbowPower(double power) {
-		elbowMotorRight.set(power);
-		//elbowMotorLeft follows whatever the right does//
-	}
-
-	public void setWristPower(double power) {
-		wristMotor.set(ControlMode.PercentOutput,power);
-	}
-
-	public void setIntakePower(double power) {
-		intakeMotor.set(power);
+	public void setPower(double shoulderPower, double elbowPower,
+		 	double wristPower, double intakePower){
+		shoulderMotor.set(shoulderPower);
+		elbowMotorRight.set(elbowPower);
+		wristMotor.set(ControlMode.PercentOutput, wristPower);
+		intakeMotor.set(intakePower);
 	}
 }
-	
