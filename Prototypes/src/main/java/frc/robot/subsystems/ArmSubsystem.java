@@ -34,7 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
 		elbowMotorLeft.follow(elbowMotorRight);
 		// talon wrist motor
 		wristMotor = new TalonFX(wristMotorId);
-		// wristMotor.restoreFactoryDefaults();
+		wristMotor.configFactoryDefault();
 
 		// Brushed PLG intake motor
 		intakeMotor = new CANSparkMax(intakeMotorId, MotorType.kBrushed);
