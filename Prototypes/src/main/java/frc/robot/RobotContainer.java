@@ -41,10 +41,10 @@ public class RobotContainer {
 
     public Command getArmCommand(){
         return new RunArmCommand(arm,
-            () -> driverController.getLeftY(),
-            () -> driverController.getLeftX(),
-            () -> driverController.getRightY(),
-            () -> driverController.getRightX());
+            () -> -ControllerHelper.modifyAxis(driverController.getLeftY()),
+            () -> -ControllerHelper.modifyAxis(driverController.getLeftX()),
+            () -> -ControllerHelper.modifyAxis(driverController.getRightY()),
+            () -> -ControllerHelper.modifyAxis(driverController.getRightX()));
     }
 
     /**

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -23,20 +24,24 @@ public class ArmSubsystem extends SubsystemBase {
 		// Neo shoulder motor
 		shoulderMotor = new CANSparkMax(shoulderMotorId, MotorType.kBrushless);
 		shoulderMotor.restoreFactoryDefaults();
+		shoulderMotor.setInverted(true);
 
 		// Neo elbow motor
 		elbowMotor = new TalonFX(elbowMotorId);
 		elbowMotor.configFactoryDefault();
 		elbowMotor.setNeutralMode(NeutralMode.Brake);
+		elbowMotor.setInverted(TalonFXInvertType.CounterClockwise);
 
 		// talon wrist motor
 		wristMotor = new TalonFX(wristMotorId);
 		wristMotor.configFactoryDefault();
 		wristMotor.setNeutralMode(NeutralMode.Brake);
+		wristMotor.setInverted(TalonFXInvertType.CounterClockwise);
 
 		// Brushed PLG intake motor
 		intakeMotor = new CANSparkMax(intakeMotorId, MotorType.kBrushed);
 		intakeMotor.restoreFactoryDefaults();
+		intakeMotor.setInverted(true);
 	}
 
 	@Override
