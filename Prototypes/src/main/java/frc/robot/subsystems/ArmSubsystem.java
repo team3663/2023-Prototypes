@@ -14,25 +14,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
 	private final CANSparkMax shoulderMotor;
-	private final CANSparkMax elbowMotorRight;
-	private final CANSparkMax elbowMotorLeft;
+	private final TalonFX elbowMotor;
 	private final TalonFX wristMotor;
 	private final CANSparkMax intakeMotor;
 
-	public ArmSubsystem(int shoulderMotorId, int elbowRightMotorId, int elbowLeftMotorId,
+	public ArmSubsystem(int shoulderMotorId, int elbowMotorId,
 		int wristMotorId, int intakeMotorId) {
 		// Neo shoulder motor
 		shoulderMotor = new CANSparkMax(shoulderMotorId, MotorType.kBrushless);
 		shoulderMotor.restoreFactoryDefaults();
-		// Neo elbow motor
-		elbowMotorRight = new CANSparkMax(elbowRightMotorId, MotorType.kBrushless);
-		elbowMotorRight.restoreFactoryDefaults();
 
-		// Neo elbow motors
-		elbowMotorLeft = new CANSparkMax(elbowLeftMotorId, MotorType.kBrushless);
-		elbowMotorLeft.restoreFactoryDefaults();
-		elbowMotorLeft.setInverted(true);
-		elbowMotorLeft.follow(elbowMotorRight);
+		// Neo elbow motor
+		elbowMotor = new TalonFX(elbowMotorId);
+		elbowMotor.configFactoryDefault();
+		elbowMotor.setNeutralMode(NeutralMode.Brake);
+
 		// talon wrist motor
 		wristMotor = new TalonFX(wristMotorId);
 		wristMotor.configFactoryDefault();
@@ -51,7 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
 	public void setPower(double shoulderPower, double elbowPower,
 		 	double wristPower, double intakePower){
 		shoulderMotor.set(shoulderPower);
-		elbowMotorRight.set(elbowPower);
+		elbowMotor.set(ControlMode.PercentOutput, elbowPower);
 		wristMotor.set(ControlMode.PercentOutput, wristPower);
 		intakeMotor.set(intakePower);
 	}
