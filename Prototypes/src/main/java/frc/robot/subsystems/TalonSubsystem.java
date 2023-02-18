@@ -13,10 +13,12 @@ public class TalonSubsystem extends SubsystemBase {
 
 	private final TalonFX motor;
 
+	
 	public TalonSubsystem(int motorId) {
 		System.out.println("===== MotorSubsystem Constructor");
-
 		motor = new TalonFX(motorId);
+
+		
 	}
 
 	@Override
@@ -33,4 +35,14 @@ public class TalonSubsystem extends SubsystemBase {
 		System.out.println("=====  MotorSubsystem.setPower");
 		motor.set(ControlMode.PercentOutput, power);
 	}
+
+	// public void setPosition(double positionModefire) {
+	// 	//timer
+	// 	//Timer timer;
+	// 	//if(timer == null)
+	// 	System.out.println("==== Setting motor position");
+		
+	// 	//TODO make position mode
+		
+	// }
 }

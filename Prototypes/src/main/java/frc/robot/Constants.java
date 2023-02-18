@@ -20,7 +20,7 @@ public final class Constants {
   }
 
   public final class CanIds {
-    public static final int TALON = 4;
+    public static final int TALON = 1;
     public static final int SPARK = 5;
   }
 }
