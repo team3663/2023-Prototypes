@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
 		// Neo shoulder motor
 		shoulderMotor = new CANSparkMax(shoulderMotorId, MotorType.kBrushless);
 		shoulderMotor.restoreFactoryDefaults();
+    shoulderMotor.setIdleMode(IdleMode.kBrake);
 		shoulderMotor.setInverted(true);
 
 		// Neo elbow motor
@@ -41,6 +43,7 @@ public class ArmSubsystem extends SubsystemBase {
 		// Brushed PLG intake motor
 		intakeMotor = new CANSparkMax(intakeMotorId, MotorType.kBrushed);
 		intakeMotor.restoreFactoryDefaults();
+    intakeMotor.setIdleMode(IdleMode.kBrake);
 		intakeMotor.setInverted(true);
 	}
 
