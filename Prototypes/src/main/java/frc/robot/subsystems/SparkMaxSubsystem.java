@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAnalogSensor.Mode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,6 +17,7 @@ public class SparkMaxSubsystem extends SubsystemBase {
 	public SparkMaxSubsystem(int motorId) {
 
 		motor = new CANSparkMax(motorId, MotorType.kBrushless);
+		motor.setInverted(true);
 		motor.restoreFactoryDefaults();
 	}
 
@@ -26,5 +28,6 @@ public class SparkMaxSubsystem extends SubsystemBase {
 
 	public void setPower(double power) {
 		motor.set(power);
+		System.out.println("===== output current: " +motor.getOutputCurrent());
 	}
 }
