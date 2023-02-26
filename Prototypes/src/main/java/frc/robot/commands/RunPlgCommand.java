@@ -4,19 +4,19 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.PlgMotorSubsystem;
 
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class ExampleCommand extends CommandBase {
+public class RunPlgCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem subsystem;
+  private final PlgMotorSubsystem subsystem;
   private final DoubleSupplier power;
   
-  public ExampleCommand(ExampleSubsystem subsystem, DoubleSupplier power) {
+  public RunPlgCommand(PlgMotorSubsystem subsystem, DoubleSupplier power) {
     this.subsystem = subsystem;
     this.power = power;
     addRequirements(subsystem);
