@@ -31,7 +31,7 @@ public class RobotContainer {
     subsystem = new PlgMotorSubsystem();
 
 
-    command = new RunPlgCommand(subsystem,() -> 0.1);
+    command = new RunPlgCommand(subsystem,() -> driveController.getLeftTriggerAxis());
     subsystem.setDefaultCommand(command);      
 
     new JoystickButton(driveController, Button.kStart.value).onTrue(new InstantCommand(() -> subsystem.resetEncoder(),subsystem));
