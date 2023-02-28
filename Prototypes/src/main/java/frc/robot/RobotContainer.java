@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.LedSubsystem;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -22,6 +23,8 @@ public class RobotContainer {
   private final Color8Bit green = new Color8Bit(0, 255, 0);
   private final Color8Bit blue = new Color8Bit(0, 0, 255);
   private final Color8Bit yellow = new Color8Bit(255, 255, 0);
+  private final Color8Bit cubeColor = new Color8Bit(170, 0, 255);
+  private final Color8Bit coneColor = new Color8Bit(255, 234, 0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -48,6 +51,8 @@ public class RobotContainer {
     driveController.a().onTrue(new InstantCommand(() -> ledSubsystem.setColor(green)));
     driveController.x().onTrue(new InstantCommand(() -> ledSubsystem.setColor(blue)));
     driveController.y().onTrue(new InstantCommand(() -> ledSubsystem.setColor(yellow)));
+    driveController.rightBumper().onTrue(new InstantCommand(() -> ledSubsystem.setColor(cubeColor)));
+    driveController.leftBumper().onTrue(new InstantCommand(() -> ledSubsystem.setColor(coneColor)));
   }
 
   /**
