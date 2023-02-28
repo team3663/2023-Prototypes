@@ -1,40 +1,35 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class LedSubsystem extends SubsystemBase {
 
-    // RoboRio PWM ports have a max output frequency of 150kHz
-    // We are targeting a PWM frequency of 500Hz to reduce flicker
-    private final double maxPulseWidthMs = 2.0;
-    private final double minPulseWidthMs = 0.0;
-    private final double centerPulseWidthMs = minPulseWidthMs + ((maxPulseWidthMs - minPulseWidthMs) / 2);
+    private final double pwmRateHz = 100.0;
 
-    // We are not driving an H-bridge so we don't need to worry about shoot-through, no deadband is needed.
-    private final double deadbandMaxMs = 0.0;    
-    private final double deadbandMinMs = 0.0;
-
-    private PWM red;
-    private PWM green;
-    private PWM blue;
+    private DigitalOutput red;
+    private DigitalOutput green;
+    private DigitalOutput blue;
 
     public LedSubsystem(int redChannel, int greenChannel, int blueChannel) {
 
-        red = new PWM(redChannel);
-        green = new PWM(greenChannel);
-        blue = new PWM(blueChannel);
+        red = new DigitalOutput(redChannel);
+        red.setPWMRate(pwmRateHz);
+        red.enablePWM(0);
 
-        red.setBounds(maxPulseWidthMs, deadbandMaxMs, centerPulseWidthMs, deadbandMinMs, minPulseWidthMs);
-        green.setBounds(maxPulseWidthMs, deadbandMaxMs, centerPulseWidthMs, deadbandMinMs, minPulseWidthMs);
-        blue.setBounds(maxPulseWidthMs, deadbandMaxMs, centerPulseWidthMs, deadbandMinMs, minPulseWidthMs);
+        green = new DigitalOutput(greenChannel);
+        green.enablePWM(0);
+
+        blue = new DigitalOutput(blueChannel);
+        blue.enablePWM(0);
     }
 
     public void setColor(Color8Bit color) {
-        red.setRaw(color.red);
-        green.setRaw(color.green);
-        blue.setRaw(color.blue);
-    }  
+
+        red.updateDutyCycle((double)color.red / 255.0);
+        green.updateDutyCycle((double)color.green / 255.0);
+        blue.updateDutyCycle((double)color.blue / 255.0);
+    } 
 }

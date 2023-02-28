@@ -25,6 +25,7 @@ public class RobotContainer {
   private final Color8Bit yellow = new Color8Bit(255, 255, 0);
   private final Color8Bit cubeColor = new Color8Bit(170, 0, 255);
   private final Color8Bit coneColor = new Color8Bit(255, 234, 0);
+  private final Color8Bit darkRed = new Color8Bit(128,0,0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -53,6 +54,9 @@ public class RobotContainer {
     driveController.y().onTrue(new InstantCommand(() -> ledSubsystem.setColor(yellow)));
     driveController.rightBumper().onTrue(new InstantCommand(() -> ledSubsystem.setColor(cubeColor)));
     driveController.leftBumper().onTrue(new InstantCommand(() -> ledSubsystem.setColor(coneColor)));
+
+    driveController.povLeft().onTrue(new InstantCommand(() -> ledSubsystem.setColor(darkRed)));
+    driveController.povRight().onTrue(new InstantCommand(() -> ledSubsystem.setColor(red)));
   }
 
   /**
