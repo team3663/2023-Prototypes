@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LedSubsystem extends SubsystemBase {
 
-    // We are targeting a PWM frequency of 500Hz so there is not too much flicker.
+    // RoboRio PWM ports have a max output frequency of 150kHz
+    // We are targeting a PWM frequency of 500Hz to reduce flicker
     private final double maxPulseWidthMs = 2.0;
     private final double minPulseWidthMs = 0.0;
     private final double centerPulseWidthMs = minPulseWidthMs + ((maxPulseWidthMs - minPulseWidthMs) / 2);
