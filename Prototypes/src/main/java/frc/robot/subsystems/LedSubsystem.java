@@ -13,6 +13,10 @@ public class LedSubsystem extends SubsystemBase {
     private final double minPulseWidthMs = 0.0;
     private final double centerPulseWidthMs = minPulseWidthMs + ((maxPulseWidthMs - minPulseWidthMs) / 2);
 
+    // We are not driving an H-bridge so we don't need to worry about shoot-through, no deadband is needed.
+    private final double deadbandMin = 0.0;
+    private final double deadbandMax = 0.0;
+
     private PWM red;
     private PWM green;
     private PWM blue;
@@ -23,9 +27,9 @@ public class LedSubsystem extends SubsystemBase {
         green = new PWM(greenChannel);
         blue = new PWM(blueChannel);
 
-        red.setBounds(maxPulseWidthMs, 0.0, centerPulseWidthMs, 0.0, minPulseWidthMs);
-        green.setBounds(maxPulseWidthMs, 0.0, centerPulseWidthMs, 0.0, minPulseWidthMs);
-        blue.setBounds(maxPulseWidthMs, 0.0, centerPulseWidthMs, 0.0, minPulseWidthMs);
+        red.setBounds(maxPulseWidthMs, deadbandMax, centerPulseWidthMs, deadbandMin, minPulseWidthMs);
+        green.setBounds(maxPulseWidthMs, deadbandMax, centerPulseWidthMs, deadbandMin, minPulseWidthMs);
+        blue.setBounds(maxPulseWidthMs, deadbandMax, centerPulseWidthMs, deadbandMin, minPulseWidthMs);
     }
 
     public void setColor(Color8Bit color) {
