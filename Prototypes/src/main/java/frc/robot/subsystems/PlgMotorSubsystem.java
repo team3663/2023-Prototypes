@@ -20,7 +20,7 @@ public class PlgMotorSubsystem extends SubsystemBase {
   private RelativeEncoder encoder;
 
   public PlgMotorSubsystem() {
-    spark = new CANSparkMax(1, MotorType.kBrushed);
+    spark = new CANSparkMax(5, MotorType.kBrushed);
     spark.restoreFactoryDefaults();
 
     // The PLG encoder emits 44.4 pulses per revolution of the output shaft.  The two outputs
