@@ -12,8 +12,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
   private final CANSparkMax motor;
 
-  public DrivetrainSubsystem() {
-    
+  public DrivetrainSubsystem(int motorId) {
+    motor = new CANSparkMax(motorId, MotorType.kBrushless);
+		motor.setInverted(true);
+		motor.restoreFactoryDefaults();
   }
 
   @Override
