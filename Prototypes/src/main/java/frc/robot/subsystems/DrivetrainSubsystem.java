@@ -11,32 +11,32 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-  /** Creates a new DrivetrainSubsystem. */
-  private CANSparkMax rightMotor; // make the variable not final
-  private CANSparkMax leftMotor;
+    /** Creates a new DrivetrainSubsystem. */
+    private CANSparkMax leftMotor; // make the variable not final
+    private CANSparkMax rightMotor;
 
-  private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotor, rightMotor);
+    private final DifferentialDrive diffDrive;
 
-  public DrivetrainSubsystem(int leftMotorId, int rightMotorId) {
-    leftMotor = new CANSparkMax(leftMotorId, MotorType.kBrushed);
-		leftMotor.setInverted(true);
-		leftMotor.restoreFactoryDefaults();
+    public DrivetrainSubsystem(int leftMotorId, int rightMotorId) {
+        leftMotor = new CANSparkMax(leftMotorId, MotorType.kBrushed);
+        leftMotor.restoreFactoryDefaults();
+        leftMotor.setInverted(true);
+        rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
+        rightMotor.restoreFactoryDefaults();
+        diffDrive = new DifferentialDrive(leftMotor, rightMotor);
+    }
 
-    rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
-		rightMotor.restoreFactoryDefaults();
-  }
+    public void arcadeDrive(double xAxisSpeed, double zAxisRotate) {
+        diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);
+    }
 
-  public void arcadeDrive(double xAxisSpeed, double zAxisRotate) {
-    diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);
-  }
+    public void stop() {
+        leftMotor.set(0);
+        rightMotor.set(0);
+    }
 
-  public void stop(){
-    leftMotor.set(0);
-    rightMotor.set(0);
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }

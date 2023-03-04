@@ -20,6 +20,7 @@ public class RobotContainer {
     private CommandXboxController driverController = new CommandXboxController(
             OperatorConstants.DRIVE_CONTROLLER_PORT);
     private DrivetrainSubsystem drivetrain;
+    private Command defaultDriveCommand;
     // private final DoubleSupplier forwardDoubleSupplier;
     // private final DoubleSupplier rotateDoubleSupplier;
 
@@ -30,17 +31,16 @@ public class RobotContainer {
         createSubsystems();
         createCommands();
         configureBindings();
+        drivetrain.setDefaultCommand(defaultDriveCommand);
     }
 
     public void createSubsystems() {
         drivetrain = new DrivetrainSubsystem(Constants.CanIds.LEFT_MOTOR_ID, Constants.CanIds.RIGHT_MOTOR_ID);
-        drivetrain.setDefaultCommand(getDefaultDriveCommand());
+        
     }
 
-    public void createCommands() {}
-
-    public Command getDefaultDriveCommand() {
-        return new DefaultDriveCommand(drivetrain, () -> -driverController.getLeftY(), () -> driverController.getRightX());
+    public void createCommands() {
+        defaultDriveCommand = new DefaultDriveCommand(drivetrain, () -> -driverController.getLeftY(), () -> driverController.getRightX());
     }
 
   /**
