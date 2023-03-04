@@ -20,8 +20,8 @@ public final class Constants {
   }
 
   public final class CanIds {
-    public static final int MOTOR_RIGHT_ID = 0; 
-    public static final int MOTOR_LEFT_ID = 1; 
+    public static final int MOTOR_RIGHT_ID = 20; 
+    public static final int MOTOR_LEFT_ID = 27; 
 
   }
 }
