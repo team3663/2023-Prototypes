@@ -6,20 +6,33 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
-  private final CANSparkMax motor;
+  private CANSparkMax rightMotor; // make the variable not final
+  private CANSparkMax leftMotor;
 
-  public DrivetrainSubsystem(int motorId) {
-    motor = new CANSparkMax(motorId, MotorType.kBrushless);
-		motor.setInverted(true);
-		motor.restoreFactoryDefaults();
+  private final DifferentialDrive diffDrive = new DifferentialDrive(leftMotor, rightMotor);
+
+  public DrivetrainSubsystem(int leftMotorId, int rightMotorId) {
+    leftMotor = new CANSparkMax(leftMotorId, MotorType.kBrushed);
+		leftMotor.setInverted(true);
+		leftMotor.restoreFactoryDefaults();
+
+    rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
+		rightMotor.restoreFactoryDefaults();
   }
 
-  public void setPower(double power){
-    motor.set(power);
+  public void arcadeDrive(double xAxisSpeed, double zAxisRotate) {
+    diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);
+  }
+
+  public void stop(){
+    leftMotor.set(0);
+    rightMotor.set(0);
   }
 
   @Override
