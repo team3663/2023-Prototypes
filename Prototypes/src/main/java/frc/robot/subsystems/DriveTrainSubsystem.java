@@ -13,26 +13,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrainSubsystem extends SubsystemBase {
   /** Creates a new DriveTrainSubsystem. */
-  private final CANSparkMax motor;
+  private CANSparkMax motorRight;
+  private CANSparkMax motorLeft;
 
-	public DrivetrainSubsystem(int SPARKmotorIdRIGHT, int SPARKmotorIdLEFT) {
-    motor = new CANSparkMax(SPARKmotorIdRIGHT, MotorType.kBrushed);
-		motor.setInverted(true);
-		motor.restoreFactoryDefaults();
+	public DrivetrainSubsystem(int motorRightId, int motorLeftId) {
+    	motorRight = new CANSparkMax(motorRightId, MotorType.kBrushed);
+		// motor.setInverted(true);
+		motorRight.restoreFactoryDefaults();
 
-    motor = new CANSparkMax(SPARKmotorIdLEFT, MotorType.kBrushed);
-		motor.setInverted(true);
-		motor.restoreFactoryDefaults();
+    	motorLeft = new CANSparkMax(motorLeftId, MotorType.kBrushed);
+		motorLeft.setInverted(true);
+		motorLeft.restoreFactoryDefaults();
 	}
 
 	@Override
 	public void periodic() {
-		System.out.println(motor.getOutputCurrent());
+		System.out.println(motorLeft.getOutputCurrent());
+    	System.out.println(motorRight.getOutputCurrent());
 	}
 
 	public void setPower(double power) {
-		motor.set(power);
-		System.out.println("===== output current: " +motor.getOutputCurrent());
+		motorLeft.set(power);
+		System.out.println("===== output current: " +motorLeft.getOutputCurrent());
+
+    	motorRight.set(power);
+		System.out.println("===== output current: " +motorRight.getOutputCurrent());
+    
 	}
 }
 
