@@ -18,6 +18,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 		motor.restoreFactoryDefaults();
   }
 
+  public void setPower(double power){
+    motor.set(power);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
