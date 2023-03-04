@@ -4,11 +4,17 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
-  public DrivetrainSubsystem() {}
+  private final CANSparkMax motor;
+
+  public DrivetrainSubsystem() {
+    
+  }
 
   @Override
   public void periodic() {
