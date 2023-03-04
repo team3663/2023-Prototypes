@@ -5,7 +5,7 @@
 package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAnalogSensor.Mode;
+
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,7 +16,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
   private CANSparkMax motorRight;
   private CANSparkMax motorLeft;
 
-	public DrivetrainSubsystem(int motorRightId, int motorLeftId) {
+	public DriveTrainSubsystem(int motorRightId, int motorLeftId) {
     	motorRight = new CANSparkMax(motorRightId, MotorType.kBrushed);
 		// motor.setInverted(true);
 		motorRight.restoreFactoryDefaults();
