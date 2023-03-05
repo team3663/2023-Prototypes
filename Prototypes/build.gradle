@@ -109,7 +109,7 @@ repositories {
     }
 }
 
-// AdvantageKit docs say to include this but it breaks the build.
-//configurations.all {
-//    exclude group: "edu.wpi.first.wpilibj"
-//}
+// This allows AdvantageKit to shim out the underlying WPILib classes that the need to replace
+configurations.all {
+    exclude group: "edu.wpi.first.wpilibj"
+}
