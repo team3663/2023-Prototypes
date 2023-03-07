@@ -23,6 +23,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftMotor.setInverted(false);
         rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
         rightMotor.restoreFactoryDefaults();
+        rightMotor.setInverted(true);
         diffDrive = new DifferentialDrive(leftMotor, rightMotor);
     }
 
@@ -33,8 +34,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public void stop() {
         leftMotor.set(0);
         rightMotor.set(0);
+    
+    }
+    public void driveLeft( double speed){
+        leftMotor.set(speed);
     }
 
+    public void driveRight(double speed){
+        rightMotor.set(speed);
+    }
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
