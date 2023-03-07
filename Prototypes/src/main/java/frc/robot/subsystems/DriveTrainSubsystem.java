@@ -3,52 +3,40 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+public class DrivetrainSubsystem extends SubsystemBase {
+    /** Creates a new DrivetrainSubsystem. */
+    private CANSparkMax leftMotor; // make the variable not final
+    private CANSparkMax rightMotor;
 
+    private final DifferentialDrive diffDrive;
 
-public class DriveTrainSubsystem extends SubsystemBase {
-  /** Creates a new DriveTrainSubsystem. */
-  private CANSparkMax motorRight;
-  private CANSparkMax motorLeft;
-	private DifferentialDrive m_diffDrive = new DifferentialDrive(motorRight, motorLeft);
-	public DriveTrainSubsystem(int motorRightId, int motorLeftId) {
-    motorRight = new CANSparkMax(motorRightId, MotorType.kBrushed);
-		// motor.setInverted(true);
-		motorRight.restoreFactoryDefaults();
+    public DrivetrainSubsystem(int leftMotorId, int rightMotorId) {
+        leftMotor = new CANSparkMax(leftMotorId, MotorType.kBrushed);
+        leftMotor.restoreFactoryDefaults();
+        leftMotor.setInverted(false);
+        rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
+        rightMotor.restoreFactoryDefaults();
+        diffDrive = new DifferentialDrive(leftMotor, rightMotor);
+    }
 
-    motorLeft = new CANSparkMax(motorLeftId, MotorType.kBrushed);
-		motorLeft.setInverted(true);
-		motorLeft.restoreFactoryDefaults();
-	}
-	public void arcadeDrive(double xaxisSpeed, double zaxisSpeed){
-		m_diffDrive.arcadeDrive(xaxisSpeed,zaxisSpeed);
-	}
+    public void arcadeDrive(double xAxisSpeed, double zAxisRotate) {
+        diffDrive.arcadeDrive(xAxisSpeed, zAxisRotate);
+    }
 
-	public void stop(){
-		motorLeft.set(0);
-		motorRight.set(0);
+    public void stop() {
+        leftMotor.set(0);
+        rightMotor.set(0);
+    }
 
-	}
-	@Override
-	public void periodic() {
-		System.out.println(motorLeft.getOutputCurrent());
-    System.out.println(motorRight.getOutputCurrent());
-	}
-
-	public void setPower(double power) {
-		motorLeft.set(power);
-		System.out.println("===== output current: " +motorLeft.getOutputCurrent());
-
-    motorRight.set(power);
-		System.out.println("===== output current: " +motorRight.getOutputCurrent());
-    
-	}
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
 }
-
-
-  
