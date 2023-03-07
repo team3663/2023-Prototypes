@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DefaultDriveCommand;
@@ -40,13 +41,16 @@ public class RobotContainer {
     }
 
     public void createCommands() {
-        defaultDriveCommand = new DefaultDriveCommand(drivetrain, () -> -driverController.getLeftY(), () -> driverController.getRightX());
+        defaultDriveCommand = new DefaultDriveCommand(drivetrain, () -> -driverController.getLeftY(), () -> -driverController.getRightX());
     }
 
   /**
    * Use this method to define your trigger->command mappings.
    */
-  private void configureBindings() {}
+  private void configureBindings() {
+    // driverController.x().onTrue(new InstantCommand(() -> drivetrain.driveLeft(0.5)));
+    // driverController.y().onTrue(new InstantCommand(() -> drivetrain.driveRight(0.5)));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
