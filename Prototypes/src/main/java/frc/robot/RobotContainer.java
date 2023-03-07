@@ -10,8 +10,8 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.subsystems.DriveTrainSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -24,14 +24,10 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.DRIVE_CONTROLLER_PORT);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    createSubsystems();
-    createCommands();
-    configureBindings();
-  }
+    public void createSubsystems() {
+        drivetrain = new DrivetrainSubsystem(Constants.CanIds.LEFT_MOTOR_ID, Constants.CanIds.RIGHT_MOTOR_ID);
+        
+    }
 
   public void createSubsystems() {
     drivetrain= new DriveTrainSubsystem(Constants.CanIds.MOTOR_LEFT_ID, Constants.CanIds.MOTOR_RIGHT_ID);
