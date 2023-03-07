@@ -44,6 +44,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         rightMotor.set(speed);
     }
 
+    public void driveTank(double leftSpeed, double rightSpeed) {
+        leftMotor.set(leftSpeed);
+        rightMotor.set(rightSpeed);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
