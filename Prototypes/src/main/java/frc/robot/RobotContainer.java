@@ -7,10 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArcadeDrive;
 
-import frc.robot.subsystems.DriveTrainSubsystem;
 
+import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private DriveTrainSubsystem drivetrain;
+  private DrivetrainSubsystem drivetrain;
 
   private final CommandXboxController driverController = new CommandXboxController(
       OperatorConstants.DRIVE_CONTROLLER_PORT);
@@ -29,21 +29,20 @@ public class RobotContainer {
         
     }
 
-  public void createSubsystems() {
-    drivetrain= new DriveTrainSubsystem(Constants.CanIds.MOTOR_LEFT_ID, Constants.CanIds.MOTOR_RIGHT_ID);
-    drivetrain.setDefaultCommand(getDefaultDriveCommand());
-  }
+  
 
   public void createCommands() {}
 
   public Command getDefaultDriveCommand(){
-    return new ArcadeDrive(drivetrain, () -> -driverController.getLeftY(), () -> driverController.getRightX());
+    return new ArcadeDrive(drivetrain, () -> -driverController.getLeftY(), () -> -driverController.getRightX());
   }
 
   /**
    * Use this method to define your trigger->command mappings.
    */
-  private void configureBindings() {}
+  private void configureBindings() {
+    // driverController.x().onTrue(new InstantCommand(() -> drivetrain.driveLeft(0.5)));
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

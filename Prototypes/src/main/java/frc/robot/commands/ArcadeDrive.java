@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -13,13 +13,13 @@ import java.util.function.DoubleSupplier;
 
 
 public class ArcadeDrive extends CommandBase {
-  private final DriveTrainSubsystem drivetrain;
+  private final DrivetrainSubsystem drivetrain;
   private final DoubleSupplier xaxisSpeedSupplier;
   private final DoubleSupplier zaxisRotateSupplier;
 
 
   public ArcadeDrive(
-      DriveTrainSubsystem drivetrain,
+      DrivetrainSubsystem drivetrain,
       DoubleSupplier xaxisSpeedSupplier,
       DoubleSupplier zaxisRotateSupplier) {
     this.drivetrain = drivetrain;
