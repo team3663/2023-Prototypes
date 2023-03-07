@@ -22,8 +22,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftMotor.restoreFactoryDefaults();
         leftMotor.setInverted(false);
         rightMotor = new CANSparkMax(rightMotorId, MotorType.kBrushed);
-        rightMotor.setInverted(true);
         rightMotor.restoreFactoryDefaults();
+        rightMotor.setInverted(true);
         diffDrive = new DifferentialDrive(leftMotor, rightMotor);
     }
 

@@ -22,10 +22,10 @@ public class ArcadeDrive extends CommandBase {
       DrivetrainSubsystem drivetrain,
       DoubleSupplier xaxisSpeedSupplier,
       DoubleSupplier zaxisRotateSupplier) {
-    this.drivetrain = drivetrain;
-    this.xaxisSpeedSupplier = xaxisSpeedSupplier;
-    this.zaxisRotateSupplier = zaxisRotateSupplier;
-    addRequirements(drivetrain);
+      this.drivetrain = drivetrain;
+      this.xaxisSpeedSupplier = xaxisSpeedSupplier;
+      this.zaxisRotateSupplier = zaxisRotateSupplier;
+      addRequirements(drivetrain);
     }
   
   
