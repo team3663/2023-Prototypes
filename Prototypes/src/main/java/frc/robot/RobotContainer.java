@@ -5,62 +5,65 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.utility.DeadBand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is where the bulk of the robot should be declared.
  */
 public class RobotContainer {
 
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    // The robot's subsystems and commands are defined here...
+    DrivetrainSubsystem tankDriveSubsystem;
+    DefaultDriveCommand driveCommand;
+    private final CommandXboxController driverController = new CommandXboxController(
+            OperatorConstants.DRIVE_CONTROLLER_PORT);
 
-  private final CommandXboxController m_driverController = new CommandXboxController(
-      OperatorConstants.DRIVE_CONTROLLER_PORT);
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        createSubsystems();
+        createCommands();
+        configureBindings();
+        driverController.a().toggleOnTrue(new InstantCommand(() -> driveCommand.slow()));
+        driverController.b().toggleOnTrue(new InstantCommand(() -> driveCommand.boost()));
+        driverController.x().toggleOnTrue(new InstantCommand(() -> driveCommand.stop()));
+        driverController.y().toggleOnTrue(new InstantCommand(() -> driveCommand.full()));
+    }
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    createSubsystems();
-    createCommands();
-    configureBindings();
-  }
+    public void createSubsystems() {
+        tankDriveSubsystem = new DrivetrainSubsystem();
+    }
 
-  public void createSubsystems() {
+    public void createCommands() {
+        driveCommand = new DefaultDriveCommand(tankDriveSubsystem,
+            () -> DeadBand.modifyAxis(-driverController.getLeftY()));
 
-  }
-
-  public void createCommands() {
-
-  }
-
-  /**
-   * Use this method to define your trigger->command mappings.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
+        tankDriveSubsystem.setDefaultCommand(driveCommand);
+    }
 
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
+ * 
+ */
+    private void configureBindings() {
+        
+    }
+
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        // return Autos.exampleAuto(m_tankDriveSubsystem,
+        //         () -> DeadBand.modifyToNoPower(m_driverController.getLeftTriggerAxis()));
+        return new PrintCommand("getAutonomousCommand");
+    }
 }

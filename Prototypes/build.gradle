@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2023.4.1"
+    id "edu.wpi.first.GradleRIO" version "2023.4.2"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -110,6 +110,6 @@ repositories {
 }
 
 // AdvantageKit docs say to include this but it breaks the build.
-//configurations.all {
-//    exclude group: "edu.wpi.first.wpilibj"
-//}
+configurations.all {
+   exclude group: "edu.wpi.first.wpilibj"
+}
