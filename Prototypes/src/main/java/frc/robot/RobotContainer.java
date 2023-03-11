@@ -4,13 +4,12 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.
@@ -18,10 +17,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final DrivetrainSubsystem m_exampleSubsystem = new DrivetrainSubsystem();
 
-  private final CommandXboxController m_driverController = new CommandXboxController(
-      OperatorConstants.DRIVE_CONTROLLER_PORT);
+  private final CommandXboxController driverController = new CommandXboxController(
+      OperatorConstants.DRIVER_CONTROLLER_PORT);
+  
+  private DrivetrainSubsystem drivetrain;
+
+  private Command defaultDriveCommand;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -30,28 +33,22 @@ public class RobotContainer {
     createSubsystems();
     createCommands();
     configureBindings();
+    drivetrain.setDefaultCommand(defaultDriveCommand);
   }
 
   public void createSubsystems() {
-
+    drivetrain = new DrivetrainSubsystem(Constants.CanIds.LEFT_MOTOR_ID, Constants.CanIds.RIGHT_MOTOR_ID);
   }
 
   public void createCommands() {
-
+    defaultDriveCommand = new DefaultDriveCommand(drivetrain, () -> -driverController.getLeftY(), () -> -driverController.getRightX());
   }
 
   /**
    * Use this method to define your trigger->command mappings.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+   
   }
 
   /**
@@ -61,6 +58,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    // return Autos.exampleAuto(m_exampleSubsystem);
+    return new PrintCommand("auto command");
   }
 }
