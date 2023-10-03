@@ -4,17 +4,23 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ExampleSubsystem extends SubsystemBase {
+
+  private final CANSparkMax motor = new CANSparkMax(Constants.CanIds.MOTOR1_ID, MotorType.kBrushless);
+
   /** Creates a new ExampleSubsystem. */
   public ExampleSubsystem() {}
 
   /**
    * Example command factory method.
-   *
-   * @return a command
    */
   public CommandBase exampleMethodCommand() {
     // Inline construction of command goes here.
@@ -23,6 +29,17 @@ public class ExampleSubsystem extends SubsystemBase {
         () -> {
           /* one-time action goes here */
         });
+  }
+
+  /**
+   * Spin the motor at the given percentage of its speed until the command is interrupted.
+   */
+  public Command spinMotor(double percentOutput) {
+    return startEnd(() -> {
+      motor.set(percentOutput);
+    }, () -> {
+      motor.set(0.0);
+    });
   }
 
   /**
